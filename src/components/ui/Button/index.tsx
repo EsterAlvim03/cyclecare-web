@@ -9,8 +9,8 @@ import Icon, { IconProps } from '../Icon';
 import Loader from '../Loader';
 
 type Props = {
+  text: string;
   color?: string;
-  text?: string;
   wired?: boolean;
   leftIcon?: IconProps;
   isLoading?: boolean;
@@ -21,7 +21,7 @@ type Props = {
 const Button = ({
   text,
   wired = false,
-  color = colors.primary[100],
+  color = colors.primary,
   leftIcon,
   isLoading = false,
   withoutDelay = false,

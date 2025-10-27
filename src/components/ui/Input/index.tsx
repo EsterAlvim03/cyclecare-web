@@ -25,7 +25,7 @@ type Props<TFieldValues extends FieldValues> = {
 
 const Input = <TFieldValues extends FieldValues>({
   label,
-  password,
+  password = false,
   placeholder,
   leftIcon,
   control,
@@ -57,11 +57,15 @@ const Input = <TFieldValues extends FieldValues>({
   };
 
   return (
-    <div className="w-full flex-col gap-1">
-      {label && <label htmlFor={name}>{label}</label>}
+    <div key={name} className="flex w-full flex-col gap-2">
+      {label && (
+        <label className="text-sm" htmlFor={name}>
+          {label}
+        </label>
+      )}
 
       <div className="gap-px">
-        <div className="border-neutral-20 relative items-center overflow-hidden rounded-lg border bg-white">
+        <div className="relative items-center overflow-hidden rounded-lg border border-neutral-200 bg-white">
           {mask ? (
             <IMaskInput mask={mask} {...commonProps} />
           ) : (
@@ -83,7 +87,7 @@ const Input = <TFieldValues extends FieldValues>({
             >
               <Icon
                 color={passwordHidden ? colors.neutral[400] : colors.primary}
-                name={passwordHidden ? 'EyeOffIcon' : 'EyeOnIcon'}
+                name={passwordHidden ? 'EyeOffIcon' : 'EyeIcon'}
               />
             </button>
           )}

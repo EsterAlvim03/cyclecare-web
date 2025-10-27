@@ -1,11 +1,8 @@
 import tailwindColors from 'tailwindcss/colors';
 
 const colors = {
-  primary: '#1654A2',
-  alert: {
-    success: '#2DAC3E',
-    error: '#DE3737',
-  },
+  primary: '#d52d81',
+  secondary: '#b384e0',
   black: tailwindColors.black,
   white: tailwindColors.white,
   transparent: tailwindColors.transparent,
