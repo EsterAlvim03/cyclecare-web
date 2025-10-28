@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -9,6 +10,8 @@ import colors from '@/theme/colors';
 import { CycleCareImg, HeartImg } from '@public/images';
 
 const Login = () => {
+  const router = useRouter();
+
   const [page, setPage] = useState(false);
 
   const { control } = useForm<{ email: string; password: string }>();
@@ -134,7 +137,11 @@ const Login = () => {
           </>
         )}
 
-        <Button text="Entrar" width="100%" />
+        <Button
+          text="Entrar"
+          width="100%"
+          onClick={() => router.push('/home')}
+        />
       </div>
     </div>
   );
