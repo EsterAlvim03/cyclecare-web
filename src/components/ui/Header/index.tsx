@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { LogoImg } from '@public/images';
 
-import Icon from '../Icon';
+import LogOutButton from './LogOutButton';
 
 const Header = () => {
   return (
@@ -14,7 +14,7 @@ const Header = () => {
         style={{ objectFit: 'contain' }}
       />
 
-      <Icon name="EyeIcon" />
+      <LogOutButton />
     </div>
   );
 };
