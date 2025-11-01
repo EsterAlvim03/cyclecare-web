@@ -12,6 +12,7 @@ type Props = {
   text: string;
   color?: string;
   wired?: boolean;
+  fontSize?: number;
   leftIcon?: IconProps;
   isLoading?: boolean;
   withoutDelay?: boolean;
@@ -21,6 +22,7 @@ type Props = {
 const Button = ({
   text,
   wired = false,
+  fontSize = 16,
   color = colors.primary,
   leftIcon,
   isLoading = false,
@@ -68,7 +70,9 @@ const Button = ({
     >
       {leftIcon && <Icon color={handleTextColor()} {...leftIcon} />}
 
-      <span className="text-lg font-semibold">{text}</span>
+      <span className="font-semibold" style={{ fontSize }}>
+        {text}
+      </span>
 
       {(isLoading || loading) && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/20">

@@ -16,13 +16,13 @@ type Props = {
 const RedirectCard = ({ icon, title, description, href }: Props) => {
   const router = useRouter();
 
-  const handlePress = () => {
+  const handleClick = () => {
     router.push(href);
   };
 
   return (
     <div className="flex w-full flex-col gap-6 rounded-lg bg-white p-6 shadow-sm">
-      <Icon name={icon} size={32} strokeWidth={2} />
+      <Icon name={icon} size={32} />
 
       <div className="flex flex-col gap-1">
         <h3 className="text-2xl font-semibold">{title}</h3>
@@ -34,7 +34,7 @@ const RedirectCard = ({ icon, title, description, href }: Props) => {
         color={colors.secondary}
         text="Acessar"
         width="100%"
-        onClick={handlePress}
+        onClick={handleClick}
       />
     </div>
   );

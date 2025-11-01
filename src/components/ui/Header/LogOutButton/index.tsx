@@ -19,7 +19,6 @@ const LogOutButton = () => {
         color={isHovered ? colors.white : colors.neutral[600]}
         name="LogOutIcon"
         size={20}
-        strokeWidth={1.5}
       />
     </button>
   );

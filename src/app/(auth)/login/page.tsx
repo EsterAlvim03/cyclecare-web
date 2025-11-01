@@ -138,6 +138,7 @@ const Login = () => {
         )}
 
         <Button
+          fontSize={18}
           text="Entrar"
           width="100%"
           onClick={() => router.push('/home')}

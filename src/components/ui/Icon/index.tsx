@@ -16,7 +16,7 @@ const Icon = ({
   name,
   size = 24,
   color = colors.primary,
-  strokeWidth = 1.5,
+  strokeWidth = 2,
   rotate = 0,
   fill = 'none',
 }: IconProps) => {

@@ -3,16 +3,18 @@
 :root {
   --color-primary: #d52d81;
   --color-secondary: #b384e0;
+  --color-background: #fbf7fc;
 }
 
 @theme inline {
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
+  --color-background: var(--color-background);
   --font-sans: var(--font-inter);
 }
 
 body {
-  background-color: var(--color-rose-50);
+  background-color: var(--color-background);
   font-family: var(--font-inter);
 }
 
