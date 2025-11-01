@@ -24,7 +24,7 @@ const Login = () => {
   }>();
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-rose-50 py-10">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-8 py-10">
       <div className="flex flex-col items-center gap-4">
         <Image
           alt="Coração"

@@ -12,6 +12,7 @@
 }
 
 body {
+  background-color: var(--color-rose-50);
   font-family: var(--font-inter);
 }
 
