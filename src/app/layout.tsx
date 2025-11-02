@@ -14,7 +14,6 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'CycleCare',
-  description: 'CycleCare',
 };
 
 const RootLayout = ({ children }: PropsWithChildren) => {
