@@ -1,9 +1,15 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+
 import HomeCard from '@/components/pages/main/home/HomeCard';
 import RedirectCard from '@/components/pages/main/home/RedirectCard';
 import { Button, Icon } from '@/components/ui';
 import colors from '@/theme/colors';
 
 const Home = () => {
+  const router = useRouter();
+
   return (
     <>
       <div className="flex flex-col gap-2">
@@ -41,7 +47,11 @@ const Home = () => {
           Registre seu primeiro ciclo para começar a acompanhar suas previsões
         </h4>
 
-        <Button color={colors.secondary} text="Começar agora" />
+        <Button
+          color={colors.secondary}
+          text="Começar agora"
+          onClick={() => router.push('/period')}
+        />
       </div>
 
       <div className="flex items-center gap-2">
