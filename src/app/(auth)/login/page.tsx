@@ -118,7 +118,7 @@ const Login = () => {
         </div>
 
         {!page ? (
-          <>
+          <div key="login-form" className="flex flex-col gap-4">
             <Input
               control={control}
               label="E-mail"
@@ -133,9 +133,9 @@ const Login = () => {
               name="password"
               placeholder="********"
             />
-          </>
+          </div>
         ) : (
-          <>
+          <div key="register-form" className="flex flex-col gap-4">
             <Input
               control={registerControl}
               label="Nome completo"
@@ -173,7 +173,7 @@ const Login = () => {
               name="confirmPassword"
               placeholder="********"
             />
-          </>
+          </div>
         )}
 
         <Button
