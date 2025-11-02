@@ -1,11 +1,13 @@
 import { PropsWithChildren } from 'react';
 
-import Header from '@/components/ui/Header';
+import { Header, TabsList } from '@/components/ui';
 
 const HomeLayout = ({ children }: PropsWithChildren) => {
   return (
     <div>
       <Header />
+
+      <TabsList />
 
       {children}
     </div>
