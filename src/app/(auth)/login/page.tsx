@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button, Input } from '@/components/ui';
+import { useDefaultModal } from '@/store/defaultModalStore';
 import colors from '@/theme/colors';
 import {
   LoginForm,
@@ -18,6 +19,7 @@ import { CycleCareImg, HeartImg } from '@public/images';
 
 const Login = () => {
   const router = useRouter();
+  const { openModal } = useDefaultModal();
 
   const [page, setPage] = useState(false);
 
@@ -52,7 +54,12 @@ const Login = () => {
 
   const onRegister = (data: RegisterForm) => {
     console.log(data);
-    redirect();
+    openModal({
+      title: 'Cadastro realizado',
+      message: 'Sua conta foi criada com sucesso!',
+      confirmText: 'Continuar',
+      onConfirm: () => redirect(),
+    });
   };
 
   return (
