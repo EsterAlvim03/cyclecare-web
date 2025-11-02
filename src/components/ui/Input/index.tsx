@@ -52,8 +52,8 @@ const Input = <TFieldValues extends FieldValues>({
       paddingRight: password ? 44 : undefined,
     },
     type: passwordHidden ? 'password' : 'text',
-    ...field,
     ...props,
+    ...field,
   };
 
   return (

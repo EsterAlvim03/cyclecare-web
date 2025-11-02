@@ -9,7 +9,7 @@ const TabsList = () => {
 
       <Tab href="/appointments" icon="CalendarFilledIcon" label="Consultas" />
 
-      <Tab href="/" icon="UserIcon" label="Perfil" />
+      <Tab href="/profile" icon="UserIcon" label="Perfil" />
     </div>
   );
 };
