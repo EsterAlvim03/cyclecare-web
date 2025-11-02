@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 
-import { Header, TabsList } from '@/components/ui';
+import TabsList from '@/components/pages/main/TabsList';
+import { Header } from '@/components/ui';
 
 const HomeLayout = ({ children }: PropsWithChildren) => {
   return (
@@ -9,7 +10,7 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
 
       <TabsList />
 
-      {children}
+      <div className="flex flex-col gap-8 px-4 py-8">{children}</div>
     </div>
   );
 };

@@ -7,4 +7,5 @@ export { default as EyeOffIcon } from './EyeOff.svg';
 export { default as HeartIcon } from './Heart.svg';
 export { default as HomeIcon } from './Home.svg';
 export { default as LogOutIcon } from './LogOut.svg';
+export { default as PlusIcon } from './Plus.svg';
 export { default as UserIcon } from './User.svg';

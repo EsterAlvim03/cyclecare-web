@@ -5,11 +5,11 @@ import colors from '@/theme/colors';
 
 const Home = () => {
   return (
-    <div className="flex flex-col gap-8 px-4 py-8">
+    <>
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold">Olá, Ester!</h1>
 
-        <span className="text-base text-neutral-600">
+        <span className="text-neutral-600">
           Bem-vinda ao seu painel de saúde
         </span>
       </div>
@@ -17,14 +17,14 @@ const Home = () => {
       <div className="flex flex-col gap-6 md:flex-row">
         <RedirectCard
           description="Acompanhe seu ciclo menstrual"
-          href="/login"
+          href="/period"
           icon="CalendarIcon"
           title="Registrar ciclo"
         />
 
         <RedirectCard
           description="Gerenciar consultas médicas"
-          href="/login"
+          href="/appointments"
           icon="CalendarFilledIcon"
           title="Agendar consulta"
         />
@@ -66,7 +66,7 @@ const Home = () => {
           title="Alimentação"
         />
       </div>
-    </div>
+    </>
   );
 };
 

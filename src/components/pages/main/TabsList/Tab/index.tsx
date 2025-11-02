@@ -3,9 +3,8 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import Icon, { TIcon } from '@/components/ui/Icon';
 import colors from '@/theme/colors';
-
-import Icon, { TIcon } from '../../Icon';
 
 type Props = {
   icon: TIcon;

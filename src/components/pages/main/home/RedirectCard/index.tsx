@@ -17,7 +17,7 @@ const RedirectCard = ({ icon, title, description, href }: Props) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(href);
+    router.replace(href);
   };
 
   return (

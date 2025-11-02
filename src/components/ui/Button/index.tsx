@@ -31,6 +31,7 @@ const Button = ({
   width = 'fit-content',
   type = 'button',
   disabled,
+  style,
   ...props
 }: Props) => {
   const { executeWithDelay, isLoading: loading } = useDisableDelay();
@@ -61,8 +62,9 @@ const Button = ({
         backgroundColor: wired ? 'transparent' : color,
         borderColor: wired ? color : 'transparent',
         color: handleTextColor(),
-        width,
         cursor: disabled || isLoading || loading ? 'default' : 'pointer',
+        width,
+        ...style,
       }}
       type={type}
       onClick={handleClick}
@@ -70,7 +72,7 @@ const Button = ({
     >
       {leftIcon && <Icon color={handleTextColor()} {...leftIcon} />}
 
-      <span className="font-semibold" style={{ fontSize }}>
+      <span className="text-nowrap font-semibold" style={{ fontSize }}>
         {text}
       </span>
 

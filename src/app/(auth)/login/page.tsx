@@ -40,7 +40,7 @@ const Login = () => {
           style={{ objectFit: 'contain' }}
         />
 
-        <span className="text-base text-neutral-600">
+        <span className="text-neutral-600">
           Seu companheiro de saúde feminina
         </span>
       </div>
@@ -56,7 +56,7 @@ const Login = () => {
 
         <div className="flex rounded-md bg-[#f7f3f5] p-1">
           <button
-            className="flex flex-1 items-center justify-center rounded-md bg-white px-3 py-1.5 text-base font-medium"
+            className="flex flex-1 items-center justify-center rounded-md bg-white px-3 py-1.5 font-medium"
             style={{
               color: !page ? colors.black : colors.neutral[500],
               backgroundColor: !page ? colors.white : colors.transparent,
@@ -67,7 +67,7 @@ const Login = () => {
           </button>
 
           <button
-            className="flex flex-1 items-center justify-center rounded-md bg-white px-3 py-1.5 text-base font-medium"
+            className="flex flex-1 items-center justify-center rounded-md bg-white px-3 py-1.5 font-medium"
             style={{
               color: page ? colors.black : colors.neutral[500],
               backgroundColor: page ? colors.white : colors.transparent,
@@ -141,7 +141,7 @@ const Login = () => {
           fontSize={18}
           text="Entrar"
           width="100%"
-          onClick={() => router.push('/home')}
+          onClick={() => router.replace('/home')}
         />
       </div>
     </div>
