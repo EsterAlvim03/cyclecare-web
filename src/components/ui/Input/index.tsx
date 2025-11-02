@@ -57,14 +57,14 @@ const Input = <TFieldValues extends FieldValues>({
   };
 
   return (
-    <div key={name} className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       {label && (
         <label className="text-sm" htmlFor={name}>
           {label}
         </label>
       )}
 
-      <div className="gap-px">
+      <div>
         <div className="relative items-center overflow-hidden rounded-lg border border-neutral-200 bg-white">
           {mask ? (
             <IMaskInput mask={mask} {...commonProps} />
@@ -95,7 +95,7 @@ const Input = <TFieldValues extends FieldValues>({
         </div>
 
         {error?.message && (
-          <span className="text-alert-error text-xs">{error.message}</span>
+          <span className="text-xs text-red-500">{error.message}</span>
         )}
       </div>
     </div>

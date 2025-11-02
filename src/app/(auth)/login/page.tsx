@@ -1,5 +1,6 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -7,6 +8,12 @@ import { useForm } from 'react-hook-form';
 
 import { Button, Input } from '@/components/ui';
 import colors from '@/theme/colors';
+import {
+  LoginForm,
+  LoginSchema,
+  RegisterForm,
+  RegisterSchema,
+} from '@/validation/login.validation';
 import { CycleCareImg, HeartImg } from '@public/images';
 
 const Login = () => {
@@ -14,14 +21,39 @@ const Login = () => {
 
   const [page, setPage] = useState(false);
 
-  const { control } = useForm<{ email: string; password: string }>();
-  const { control: registerControl } = useForm<{
-    name: string;
-    phone: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }>();
+  const { control, handleSubmit } = useForm<LoginForm>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const { control: registerControl, handleSubmit: handleRegisterSubmit } =
+    useForm<RegisterForm>({
+      resolver: zodResolver(RegisterSchema),
+      defaultValues: {
+        name: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: '',
+      },
+    });
+
+  const redirect = () => {
+    router.replace('/home');
+  };
+
+  const onLogin = (data: LoginForm) => {
+    console.log(data);
+    redirect();
+  };
+
+  const onRegister = (data: RegisterForm) => {
+    console.log(data);
+    redirect();
+  };
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 py-10">
@@ -141,7 +173,9 @@ const Login = () => {
           fontSize={18}
           text="Entrar"
           width="100%"
-          onClick={() => router.replace('/home')}
+          onClick={() =>
+            page ? handleRegisterSubmit(onRegister)() : handleSubmit(onLogin)()
+          }
         />
       </div>
     </div>
