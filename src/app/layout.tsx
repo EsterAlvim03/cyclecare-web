@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { PropsWithChildren } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import Providers from '@/components/pages/Providers';
 
@@ -21,6 +22,8 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="pt-BR">
       <body className={`${inter.variable} antialiased`}>
         <Providers>{children}</Providers>
+
+        <ToastContainer />
       </body>
     </html>
   );

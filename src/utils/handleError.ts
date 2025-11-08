@@ -1,8 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-const handleCustomErrors = (error: AxiosError<{ message: string }>): string => {
-  const errorMessage = error.response?.data?.message;
+const handleCustomErrors = (error: AxiosError<string>): string => {
+  const errorMessage = error.response?.data;
 
   if (!errorMessage || typeof errorMessage !== 'string') {
     return 'Houve um imprevisto, tente novamente mais tarde';
@@ -34,21 +34,29 @@ export const handleError = (
   err: AxiosError | string | Error | unknown,
 ): void => {
   if (axios.isAxiosError(err)) {
-    toast.error(handleCustomErrors(err));
+    toast.error(handleCustomErrors(err), {
+      toastId: err.response?.data,
+    });
     return;
   }
 
   if (err instanceof Error) {
-    toast.error(err.message);
+    toast.error(err.message, {
+      toastId: err.message,
+    });
     return;
   }
 
   if (typeof err === 'string') {
-    toast.error(err);
+    toast.error(err, {
+      toastId: err,
+    });
     return;
   }
 
-  toast.error('Houve um imprevisto, tente novamente mais tarde');
+  toast.error('Houve um imprevisto, tente novamente mais tarde', {
+    toastId: 'unknown-error',
+  });
 };
 
 export const handleSuccess = (message: string): void => {

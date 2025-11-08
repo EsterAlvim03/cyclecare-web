@@ -1,15 +1,15 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { useAuth } from '@/contexts/authContext';
 import { useDefaultModal } from '@/store/defaultModalStore';
 import colors from '@/theme/colors';
 
 import Icon from '../../Icon';
 
 const LogOutButton = () => {
-  const router = useRouter();
+  const { logout } = useAuth();
   const { openModal } = useDefaultModal();
 
   const [isHovered, setIsHovered] = useState(false);
@@ -19,7 +19,7 @@ const LogOutButton = () => {
       title: 'Sair?',
       message: 'Tem certeza que deseja sair da sua conta?',
       confirmText: 'Sair',
-      onConfirm: () => router.replace('/login'),
+      onConfirm: () => logout(),
       cancelText: 'Cancelar',
     });
   };

@@ -2,11 +2,12 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button, Input } from '@/components/ui';
+import { useAuth } from '@/contexts/authContext';
+import { useRegister } from '@/hooks/api/useAuthApi';
 import { useDefaultModal } from '@/store/defaultModalStore';
 import colors from '@/theme/colors';
 import {
@@ -18,16 +19,18 @@ import {
 import { CycleCareImg, HeartImg } from '@public/images';
 
 const Login = () => {
-  const router = useRouter();
+  const { login, logout } = useAuth();
   const { openModal } = useDefaultModal();
+
+  const { mutateAsync: register } = useRegister();
 
   const [page, setPage] = useState(false);
 
   const { control, handleSubmit } = useForm<LoginForm>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'email@email.com',
+      password: 'aaaaaaaa',
     },
   });
 
@@ -43,24 +46,23 @@ const Login = () => {
       },
     });
 
-  const redirect = () => {
-    router.replace('/home');
+  const onRegister = async (data: RegisterForm) => {
+    try {
+      await register(data);
+      openModal({
+        title: 'Cadastro realizado',
+        message: 'Sua conta foi criada com sucesso!',
+        confirmText: 'Continuar',
+        onConfirm: () => login(data),
+      });
+    } catch {
+      // handled by react query
+    }
   };
 
-  const onLogin = (data: LoginForm) => {
-    console.log(data);
-    redirect();
-  };
-
-  const onRegister = (data: RegisterForm) => {
-    console.log(data);
-    openModal({
-      title: 'Cadastro realizado',
-      message: 'Sua conta foi criada com sucesso!',
-      confirmText: 'Continuar',
-      onConfirm: () => redirect(),
-    });
-  };
+  useEffect(() => {
+    logout();
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 py-10">
@@ -148,7 +150,7 @@ const Login = () => {
               label="Celular"
               mask="(00) 00000-0000"
               name="phone"
-              placeholder="(XX) XXXXX-XXXX"
+              placeholder="(00) 00000-0000"
             />
 
             <Input
@@ -156,6 +158,14 @@ const Login = () => {
               label="E-mail"
               name="email"
               placeholder="seu@email.com"
+            />
+
+            <Input
+              control={registerControl}
+              label="CPF"
+              mask="000.000.000-00"
+              name="cpf"
+              placeholder="000.000.000-00"
             />
 
             <Input
@@ -181,7 +191,7 @@ const Login = () => {
           text="Entrar"
           width="100%"
           onClick={() =>
-            page ? handleRegisterSubmit(onRegister)() : handleSubmit(onLogin)()
+            page ? handleRegisterSubmit(onRegister)() : handleSubmit(login)()
           }
         />
       </div>

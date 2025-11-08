@@ -5,15 +5,17 @@ import { useRouter } from 'next/navigation';
 import HomeCard from '@/components/pages/main/home/HomeCard';
 import RedirectCard from '@/components/pages/main/home/RedirectCard';
 import { Button, Icon } from '@/components/ui';
+import { useAuth } from '@/contexts/authContext';
 import colors from '@/theme/colors';
 
 const Home = () => {
   const router = useRouter();
+  const { user } = useAuth();
 
   return (
     <>
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold">Olá, Ester!</h1>
+        <h1 className="text-3xl font-bold">Olá, {user?.name}!</h1>
 
         <span className="text-neutral-600">
           Bem-vinda ao seu painel de saúde

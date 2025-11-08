@@ -1,4 +1,7 @@
 export const queryKeys = {
+  user: {
+    me: ['me'] as const,
+  },
   base: {
     all: ['bases'] as const,
     lists: () => [...queryKeys.base.all, 'list'] as const,

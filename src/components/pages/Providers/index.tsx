@@ -6,7 +6,6 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import { PropsWithChildren } from 'react';
-import { ToastContainer } from 'react-toastify/unstyled';
 
 import { DefaultModal } from '@/components/ui';
 import { AuthProvider } from '@/contexts/authContext';
@@ -20,7 +19,11 @@ const queryClient = new QueryClient({
       initialDataUpdatedAt: 0,
     },
     mutations: {
-      onError: err => handleError(err),
+      onError: err => {
+        console.log(err.message);
+
+        handleError(err);
+      },
     },
   },
   mutationCache: new MutationCache({
@@ -41,8 +44,6 @@ const Providers = ({ children }: PropsWithChildren) => {
         {children}
 
         <DefaultModal />
-
-        <ToastContainer />
       </AuthProvider>
     </QueryClientProvider>
   );

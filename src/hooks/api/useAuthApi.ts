@@ -7,3 +7,9 @@ export const useLogin = () => {
     mutationFn: authService.login,
   });
 };
+
+export const useRegister = () => {
+  return useMutation({
+    mutationFn: authService.register,
+  });
+};

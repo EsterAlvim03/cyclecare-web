@@ -1,4 +1,4 @@
-import { validatePhone } from '@/utils/validation';
+import { validateCpf, validatePhone } from '@/utils/validation';
 
 import z from './zod';
 
@@ -17,6 +17,7 @@ export const RegisterSchema = z
       .min(1)
       .refine(validatePhone, 'Número de telefone inválido'),
     email: z.email(),
+    cpf: z.string().min(1).refine(validateCpf, 'CPF inválido'),
     password: z.string().min(8),
     confirmPassword: z.string().min(1),
   })
