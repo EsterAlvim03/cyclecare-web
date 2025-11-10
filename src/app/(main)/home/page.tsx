@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import HomeCard from '@/components/pages/main/home/HomeCard';
+import DocsCardsList from '@/components/pages/main/home/DocsCardsList';
 import RedirectCard from '@/components/pages/main/home/RedirectCard';
 import { Button, Icon } from '@/components/ui';
 import { useAuth } from '@/contexts/authContext';
@@ -52,32 +52,11 @@ const Home = () => {
         <Button
           color={colors.secondary}
           text="Começar agora"
-          onClick={() => router.push('/period')}
+          onClick={() => router.push('/cycles')}
         />
       </div>
 
-      <div className="flex items-center gap-2">
-        <Icon name="BookOpenIcon" />
-
-        <h3 className="text-2xl font-bold">Dicas de saúde</h3>
-      </div>
-
-      <div className="flex flex-col gap-6 md:flex-row">
-        <HomeCard
-          description="Beber água regularmente ajuda a reduzir cólicas e inchaço durante o ciclo menstrual."
-          title="Hidratação"
-        />
-
-        <HomeCard
-          description="Atividades físicas leves como caminhada e yoga podem aliviar sintomas da TPM."
-          title="Exercícios"
-        />
-
-        <HomeCard
-          description="Uma dieta rica em ferro e vitaminas é essencial durante o período menstrual."
-          title="Alimentação"
-        />
-      </div>
+      <DocsCardsList />
     </>
   );
 };
