@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         await setTokenAndLogin(accessToken);
       }
 
-      if (!accessToken && PUBLIC_PATHS.includes(pathname)) {
+      if (!accessToken && !PUBLIC_PATHS.includes(pathname)) {
         router.replace('/login');
       }
 
