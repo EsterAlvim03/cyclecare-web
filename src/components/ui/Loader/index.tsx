@@ -5,7 +5,7 @@ type Props = {
   color?: string;
 };
 
-const Loader = ({ size = 20, color = colors.primary[100] }: Props) => {
+const Loader = ({ size = 20, color = colors.primary }: Props) => {
   const borderColor = `${color}54`; // 33% opacity
 
   return (
