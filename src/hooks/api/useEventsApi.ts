@@ -22,20 +22,20 @@ export const useEvent = (eventId?: string) => {
 export const useCreateEvent = () => {
   return useMutation({
     mutationFn: eventService.create,
-    meta: { invalidateQueries: queryKeys.events.lists() },
+    meta: { invalidateQueries: queryKeys.events.all },
   });
 };
 
 export const useUpdateEvent = () => {
   return useMutation({
     mutationFn: eventService.update,
-    meta: { invalidateQueries: queryKeys.events.lists() },
+    meta: { invalidateQueries: queryKeys.events.all },
   });
 };
 
 export const useDeleteEvent = () => {
   return useMutation({
     mutationFn: eventService.delete,
-    meta: { invalidateQueries: queryKeys.events.lists() },
+    meta: { invalidateQueries: queryKeys.events.all },
   });
 };

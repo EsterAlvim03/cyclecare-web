@@ -5,7 +5,7 @@ import { cycleService } from '@/services/api/cycle';
 
 export const useCycles = () => {
   return useQuery({
-    queryKey: queryKeys.cycles.lists(),
+    queryKey: queryKeys.cycles.all,
     queryFn: cycleService.list,
     initialData: [],
   });
@@ -22,20 +22,20 @@ export const useCycle = (cycleId?: string) => {
 export const useCreateCycle = () => {
   return useMutation({
     mutationFn: cycleService.create,
-    meta: { invalidateQueries: queryKeys.cycles.lists() },
+    meta: { invalidateQueries: queryKeys.cycles.all },
   });
 };
 
 export const useUpdateCycle = () => {
   return useMutation({
     mutationFn: cycleService.update,
-    meta: { invalidateQueries: queryKeys.cycles.lists() },
+    meta: { invalidateQueries: queryKeys.cycles.all },
   });
 };
 
 export const useDeleteCycle = () => {
   return useMutation({
     mutationFn: cycleService.delete,
-    meta: { invalidateQueries: queryKeys.cycles.lists() },
+    meta: { invalidateQueries: queryKeys.cycles.all },
   });
 };

@@ -55,8 +55,10 @@ const Input = <TFieldValues extends FieldValues>({
     },
     type: passwordHidden ? 'password' : 'text',
     disabled,
+    onChange: field.onChange,
+    onBlur: field.onBlur,
+    value: field.value || '',
     ...props,
-    ...field,
   };
 
   return (

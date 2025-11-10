@@ -99,7 +99,7 @@ const CycleModal = () => {
   }
 
   return (
-    <DefaultModalBackdrop>
+    <DefaultModalBackdrop key={`cycle-modal${cycleId}`}>
       <dialog className="relative flex w-[400px] flex-col overflow-hidden rounded-lg bg-white">
         <DefaultModalHeader title={cycleId ? 'Editar ciclo' : 'Criar ciclo'} />
 

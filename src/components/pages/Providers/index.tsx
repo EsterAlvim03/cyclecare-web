@@ -42,7 +42,6 @@ const Providers = ({ children }: PropsWithChildren) => {
   return (
     <QueryClientProvider client={queryClient}>
       <GoogleOAuthProvider clientId="1023348174883-ilrs9or50b0v9uqlcim4gpcl8up6qpp4.apps.googleusercontent.com">
-        {/* <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}> */}
         <AuthProvider>
           {children}
 
