@@ -1,6 +1,13 @@
-import { Button, Icon } from '@/components/ui';
+'use client';
 
-const Appointments = () => {
+import EventModal from '@/components/pages/main/events/EventModal';
+import EventsList from '@/components/pages/main/events/EventsList';
+import { Button, Icon } from '@/components/ui';
+import { useEventModal } from '@/store/eventModalStore';
+
+const Events = () => {
+  const { openModal } = useEventModal();
+
   return (
     <>
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
@@ -8,27 +15,28 @@ const Appointments = () => {
           <div className="flex items-center gap-2">
             <Icon name="CalendarFilledIcon" size={32} />
 
-            <h1 className="text-3xl font-bold">Consultas Médicas</h1>
+            <h1 className="text-3xl font-bold">Eventos Médicos</h1>
           </div>
 
           <span className="text-neutral-600">
-            Gerencie suas consultas e acompanhamentos
+            Gerencie seus eventos e acompanhamentos
           </span>
         </div>
 
         <Button
           leftIcon={{ name: 'PlusIcon', size: 16 }}
           style={{ alignSelf: 'flex-end' }}
-          text="Nova consulta"
+          text="Novo evento"
           width={200}
+          onClick={() => openModal()}
         />
       </div>
 
-      <div className="flex justify-center rounded-lg bg-white p-6 shadow-sm">
-        <span className="text-neutral-500">Nenhuma consulta agendada</span>
-      </div>
+      <EventsList />
+
+      <EventModal />
     </>
   );
 };
 
-export default Appointments;
+export default Events;

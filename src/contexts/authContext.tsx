@@ -52,9 +52,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     queryClient.removeQueries();
     setUser(null);
 
-    if (pathname !== '/login') {
-      router.replace('/login');
-    }
+    router.replace('/login');
   };
 
   const fetchUser = async () => {
@@ -83,7 +81,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
 
     await fetchUser();
-    router.replace('/home');
   };
 
   const login = async (form: LoginForm) => {
@@ -91,6 +88,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       const { jwt } = await loginMutate(form);
 
       await setTokenAndLogin(jwt, form.rememberMe);
+      router.replace('/home');
     } catch (err) {
       handleError(err);
       logout();
@@ -102,6 +100,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       if (tokenResponse.access_token) {
         const { jwt } = await loginGoogleMutate(tokenResponse.access_token);
         await setTokenAndLogin(jwt);
+        router.replace('/home');
       }
     },
     scope: 'https://www.googleapis.com/auth/calendar',
@@ -116,9 +115,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       if (accessToken) {
         await setTokenAndLogin(accessToken);
       }
-      if (!accessToken && pathname && !PUBLIC_PATHS.includes(pathname)) {
+
+      if (!accessToken && PUBLIC_PATHS.includes(pathname)) {
         router.replace('/login');
       }
+
       setIsReady(true);
     };
     fetchUser();

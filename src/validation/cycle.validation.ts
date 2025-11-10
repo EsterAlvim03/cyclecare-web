@@ -4,7 +4,7 @@ import { validateDate } from '@/utils/validation';
 import z from './zod';
 
 export const CycleSchema = z.object({
-  mood: z.string(),
+  mood: z.string().min(1),
   startDate: z
     .string()
     .refine(validateDate, 'Data inválida')

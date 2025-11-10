@@ -1,5 +1,7 @@
+'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/ui';
@@ -12,33 +14,37 @@ import {
   useCycle,
   useUpdateCycle,
 } from '@/hooks/api/useCyclesApi';
+import { useCycleModal } from '@/store/cycleModalStore';
 import { useDefaultModal } from '@/store/defaultModalStore';
 import { formatDateToDisplay } from '@/utils/format';
 import { CycleForm, CycleSchema } from '@/validation/cycle.validation';
 import { moodsOptions } from '@public/data/moodsOptions';
 
-type Props = {
-  cycleId?: string;
-  show: boolean;
-  setShow: Dispatch<SetStateAction<boolean>>;
+const DEFAULT_VALUES = {
+  mood: '',
+  startDate: '',
+  endDate: '',
 };
 
-const CycleModal = ({ show, setShow, cycleId }: Props) => {
+const CycleModal = () => {
   const { openModal } = useDefaultModal();
+  const { cycleId, showModal, closeModal } = useCycleModal();
   const { data } = useCycle(cycleId);
+
   const { mutateAsync: updateCycle } = useUpdateCycle();
   const { mutateAsync: createCycle } = useCreateCycle();
 
   const { control, handleSubmit, reset } = useForm<CycleForm>({
     resolver: zodResolver(CycleSchema),
-    defaultValues: {
-      mood: '',
-      startDate: '',
-      endDate: '',
-    },
+    defaultValues: DEFAULT_VALUES,
   });
 
   useEffect(() => {
+    if (!cycleId) {
+      reset(DEFAULT_VALUES);
+      return;
+    }
+
     if (data) {
       reset({
         mood: data.mood,
@@ -46,10 +52,10 @@ const CycleModal = ({ show, setShow, cycleId }: Props) => {
         endDate: formatDateToDisplay(data.endDate),
       });
     }
-  }, [data]);
+  }, [showModal, data, cycleId]);
 
   const handleClose = () => {
-    setShow(false);
+    closeModal();
     reset();
   };
 
@@ -88,7 +94,7 @@ const CycleModal = ({ show, setShow, cycleId }: Props) => {
     }
   };
 
-  if (!show) {
+  if (!showModal) {
     return null;
   }
 
@@ -108,7 +114,7 @@ const CycleModal = ({ show, setShow, cycleId }: Props) => {
           <Input
             control={control}
             label="Data de início"
-            mask="00/00/0000 00:00"
+            mask="00/00/0000"
             name="startDate"
             placeholder="DD/MM/AAAA"
           />
@@ -116,7 +122,7 @@ const CycleModal = ({ show, setShow, cycleId }: Props) => {
           <Input
             control={control}
             label="Data de término"
-            mask="00/00/0000 00:00"
+            mask="00/00/0000"
             name="endDate"
             placeholder="DD/MM/AAAA"
           />

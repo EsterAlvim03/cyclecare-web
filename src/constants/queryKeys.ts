@@ -1,14 +1,19 @@
 export const queryKeys = {
-  user: {
-    me: ['me'] as const,
-  },
-  terms: {
-    all: ['terms'] as const,
-  },
   cycles: {
     all: ['cycles'] as const,
     lists: () => [...queryKeys.cycles.all, 'list'] as const,
     details: (id: string) => [...queryKeys.cycles.all, 'details', id] as const,
+  },
+  events: {
+    all: ['events'] as const,
+    lists: () => [...queryKeys.events.all, 'list'] as const,
+    details: (id: string) => [...queryKeys.events.all, 'details', id] as const,
+  },
+  terms: {
+    all: ['terms'] as const,
+  },
+  user: {
+    me: ['me'] as const,
   },
 } as const;
 

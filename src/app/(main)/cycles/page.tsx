@@ -1,13 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-
 import CycleModal from '@/components/pages/main/cycles/CycleModal';
 import CyclesList from '@/components/pages/main/cycles/CyclesList';
 import { Button, Icon } from '@/components/ui';
+import { useCycleModal } from '@/store/cycleModalStore';
 
-const Period = () => {
-  const [showModal, setShowModal] = useState(false);
+const Cycles = () => {
+  const { openModal } = useCycleModal();
 
   return (
     <>
@@ -27,17 +26,17 @@ const Period = () => {
         <Button
           leftIcon={{ name: 'PlusIcon', size: 16 }}
           style={{ alignSelf: 'flex-end' }}
-          text="Novo registro"
+          text="Novo ciclo"
           width={200}
-          onClick={() => setShowModal(true)}
+          onClick={() => openModal()}
         />
       </div>
 
       <CyclesList />
 
-      <CycleModal setShow={setShowModal} show={showModal} />
+      <CycleModal />
     </>
   );
 };
 
-export default Period;
+export default Cycles;

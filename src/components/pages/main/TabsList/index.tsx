@@ -7,7 +7,7 @@ const TabsList = () => {
 
       <Tab href="/cycles" icon="CalendarIcon" label="Ciclo" />
 
-      <Tab href="/appointments" icon="CalendarFilledIcon" label="Consultas" />
+      <Tab href="/events" icon="CalendarFilledIcon" label="Eventos" />
 
       <Tab href="/profile" icon="UserIcon" label="Perfil" />
     </div>

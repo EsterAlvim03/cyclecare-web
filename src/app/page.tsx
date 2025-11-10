@@ -1,7 +1,16 @@
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const RootPage = () => {
-  redirect('/login');
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/login');
+  }, [router]);
+
+  return <></>;
 };
 
 export default RootPage;

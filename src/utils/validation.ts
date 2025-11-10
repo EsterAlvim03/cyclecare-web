@@ -36,6 +36,34 @@ export const validateDate = (
   return true;
 };
 
+export const validateTime = (time: string): boolean => {
+  if (!time) {
+    return true;
+  }
+
+  if (!time.match(/^\d{2}:\d{2}$/)) {
+    return false;
+  }
+
+  const [hours, minutes] = time.split(':').map(Number);
+
+  if (hours < 0 || hours > 23) {
+    return false;
+  }
+
+  if (minutes < 0 || minutes > 59) {
+    return false;
+  }
+
+  return true;
+};
+
+export const validateDateTime = (dateTime: string): boolean => {
+  const [date, time] = dateTime.split(' ');
+
+  return validateDate(date) && validateTime(time);
+};
+
 export const validateRG = (rg: string) => {
   if (!rg) {
     return false;

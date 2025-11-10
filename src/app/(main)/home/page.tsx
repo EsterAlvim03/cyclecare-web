@@ -25,14 +25,14 @@ const Home = () => {
       <div className="flex flex-col gap-6 md:flex-row">
         <RedirectCard
           description="Acompanhe seu ciclo menstrual"
-          href="/period"
+          href="/cycles"
           icon="CalendarIcon"
           title="Registrar ciclo"
         />
 
         <RedirectCard
           description="Gerenciar consultas médicas"
-          href="/appointments"
+          href="/events"
           icon="CalendarFilledIcon"
           title="Agendar consulta"
         />
