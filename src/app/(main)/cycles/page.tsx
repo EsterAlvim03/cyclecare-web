@@ -1,6 +1,14 @@
+'use client';
+
+import { useState } from 'react';
+
+import CycleModal from '@/components/pages/main/cycles/CycleModal';
+import CyclesList from '@/components/pages/main/cycles/CyclesList';
 import { Button, Icon } from '@/components/ui';
 
 const Period = () => {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <>
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
@@ -21,12 +29,13 @@ const Period = () => {
           style={{ alignSelf: 'flex-end' }}
           text="Novo registro"
           width={200}
+          onClick={() => setShowModal(true)}
         />
       </div>
 
-      <div className="flex justify-center rounded-lg bg-white p-6 shadow-sm">
-        <span className="text-neutral-500">Nenhum ciclo registrado ainda</span>
-      </div>
+      <CyclesList />
+
+      <CycleModal setShow={setShowModal} show={showModal} />
     </>
   );
 };

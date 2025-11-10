@@ -10,7 +10,9 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
 
       <TabsList />
 
-      <div className="flex flex-col gap-8 px-4 py-8">{children}</div>
+      <div className="mx-auto flex max-w-[1368px] flex-col gap-8 px-4 py-8">
+        {children}
+      </div>
     </div>
   );
 };

@@ -10,7 +10,7 @@ const DefaultModalBackdrop = ({
 }: PropsWithChildren<Props>) => {
   return (
     <div
-      className="fixed inset-0 flex h-screen items-center bg-black/25"
+      className="fixed inset-0 z-50 flex h-screen items-center bg-black/25"
       style={{ justifyContent }}
     >
       {children}

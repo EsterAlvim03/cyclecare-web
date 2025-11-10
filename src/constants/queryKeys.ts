@@ -5,9 +5,10 @@ export const queryKeys = {
   terms: {
     all: ['terms'] as const,
   },
-  base: {
-    all: ['bases'] as const,
-    lists: () => [...queryKeys.base.all, 'list'] as const,
+  cycles: {
+    all: ['cycles'] as const,
+    lists: () => [...queryKeys.cycles.all, 'list'] as const,
+    details: (id: string) => [...queryKeys.cycles.all, 'details', id] as const,
   },
 } as const;
 
