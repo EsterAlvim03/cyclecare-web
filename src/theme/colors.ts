@@ -7,6 +7,8 @@ const colors = {
   white: tailwindColors.white,
   transparent: tailwindColors.transparent,
   neutral: tailwindColors.neutral,
+  red: tailwindColors.red,
+  green: tailwindColors.green,
 } as const;
 
 export default colors;

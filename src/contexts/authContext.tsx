@@ -1,5 +1,10 @@
+/* eslint-disable no-unused-vars */
 'use client';
 
+import {
+  OverridableTokenClientConfig,
+  useGoogleLogin,
+} from '@react-oauth/google';
 import { useQueryClient } from '@tanstack/react-query';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -10,18 +15,22 @@ import {
   useState,
 } from 'react';
 
-import { useLogin } from '@/hooks/api/useAuthApi';
+import { useLogin, useLoginGoogle } from '@/hooks/api/useAuthApi';
 import { useMe } from '@/hooks/api/useUser';
 import { http } from '@/services/http';
 import { TUser } from '@/types/user';
-import { LoginForm } from '@/validation/login.validation';
+import { handleError } from '@/utils/handleError';
+import { LoginForm } from '@/validation/auth.validation';
 
 type ContextValues = {
   user: TUser | null;
-  // eslint-disable-next-line no-unused-vars
+  googleLogin: (overrideConfig?: OverridableTokenClientConfig) => void;
   login: (form: LoginForm) => Promise<void>;
   logout: () => void;
+  fetchUser: () => Promise<void>;
 };
+
+const PUBLIC_PATHS = ['/login', '/terms'];
 
 const AuthContext = createContext({} as ContextValues);
 
@@ -33,11 +42,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<TUser | null>(null);
 
   const [isReady, setIsReady] = useState(false);
-  const { mutateAsync } = useLogin();
+  const { mutateAsync: loginMutate } = useLogin();
+  const { mutateAsync: loginGoogleMutate } = useLoginGoogle();
   const { refetch } = useMe();
 
   const logout = () => {
     sessionStorage.removeItem('accessToken');
+    localStorage.removeItem('accessToken');
     queryClient.removeQueries();
     setUser(null);
 
@@ -47,46 +58,70 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   const fetchUser = async () => {
-    try {
-      const { status, data } = await refetch();
+    const { status, data } = await refetch();
 
-      if (status === 'error') {
-        throw new Error('Erro ao buscar usuário');
-      }
-
-      if (data) {
-        setUser(data!);
-      }
-    } catch {
+    if (status === 'error') {
       throw new Error('Erro ao buscar usuário');
     }
+
+    if (data) {
+      setUser(data!);
+    }
+  };
+
+  const setTokenAndLogin = async (jwt?: string, remember?: boolean) => {
+    if (!jwt) {
+      return;
+    }
+
+    if (remember) {
+      localStorage.setItem('accessToken', jwt);
+    }
+
+    if (!remember) {
+      sessionStorage.setItem('accessToken', jwt);
+    }
+
+    await fetchUser();
+    router.replace('/home');
   };
 
   const login = async (form: LoginForm) => {
     try {
-      const { jwt } = await mutateAsync(form);
+      const { jwt } = await loginMutate(form);
 
-      if (jwt) {
-        sessionStorage.setItem('accessToken', jwt);
-        await fetchUser();
-        router.replace('/home');
-      }
-    } catch {
+      await setTokenAndLogin(jwt, form.rememberMe);
+    } catch (err) {
+      handleError(err);
       logout();
     }
   };
 
-  useEffect(() => {
-    const checkToken = () => {
-      const accessToken = sessionStorage.getItem('accessToken');
+  const googleLogin = useGoogleLogin({
+    onSuccess: async tokenResponse => {
+      if (tokenResponse.access_token) {
+        const { jwt } = await loginGoogleMutate(tokenResponse.access_token);
+        await setTokenAndLogin(jwt);
+      }
+    },
+    scope: 'https://www.googleapis.com/auth/calendar',
+  });
 
-      if (!accessToken && pathname !== '/login') {
+  useEffect(() => {
+    const fetchUser = async () => {
+      const accessToken =
+        sessionStorage.getItem('accessToken') ||
+        localStorage.getItem('accessToken');
+
+      if (accessToken) {
+        await setTokenAndLogin(accessToken);
+      }
+      if (!accessToken && pathname && !PUBLIC_PATHS.includes(pathname)) {
         router.replace('/login');
       }
+      setIsReady(true);
     };
-
-    checkToken();
-    setIsReady(true);
+    fetchUser();
   }, []);
 
   http.interceptors.response.use(
@@ -98,7 +133,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
       if (
         error.code === 'ERR_SECURESTORE_ENCRYPT_FAILURE' ||
-        error.response?.status === 401
+        error.response?.status === 403
       ) {
         logout();
       }
@@ -112,7 +147,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, googleLogin, login, logout, fetchUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -2,11 +2,22 @@ import { TUser } from '@/types/user';
 
 import { http } from '../http';
 
-const BASE_URL = 'users/';
+const BASE_URL = 'users';
 
 export const userService = {
   me: async () => {
-    const { data } = await http.get<TUser>(`${BASE_URL}me`);
+    const { data } = await http.get<TUser>(BASE_URL);
+
     return data;
+  },
+
+  update: async (user: Partial<TUser>) => {
+    const { data } = await http.put<TUser>(BASE_URL, user);
+
+    return data;
+  },
+
+  delete: async () => {
+    await http.delete(BASE_URL);
   },
 };

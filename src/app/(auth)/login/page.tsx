@@ -1,68 +1,16 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
-import { Button, Input } from '@/components/ui';
-import { useAuth } from '@/contexts/authContext';
-import { useRegister } from '@/hooks/api/useAuthApi';
-import { useDefaultModal } from '@/store/defaultModalStore';
-import colors from '@/theme/colors';
-import {
-  LoginForm,
-  LoginSchema,
-  RegisterForm,
-  RegisterSchema,
-} from '@/validation/login.validation';
+import GoogleLoginButton from '@/components/pages/auth/login/GoogleLoginButton';
+import LoginFields from '@/components/pages/auth/login/LoginFields';
+import LoginTab from '@/components/pages/auth/login/LoginTab';
+import RegisterFields from '@/components/pages/auth/login/RegisterFields';
 import { CycleCareImg, HeartImg } from '@public/images';
 
 const Login = () => {
-  const { login, logout } = useAuth();
-  const { openModal } = useDefaultModal();
-
-  const { mutateAsync: register } = useRegister();
-
   const [page, setPage] = useState(false);
-
-  const { control, handleSubmit } = useForm<LoginForm>({
-    resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      email: 'email@email.com',
-      password: 'aaaaaaaa',
-    },
-  });
-
-  const { control: registerControl, handleSubmit: handleRegisterSubmit } =
-    useForm<RegisterForm>({
-      resolver: zodResolver(RegisterSchema),
-      defaultValues: {
-        name: '',
-        email: '',
-        phone: '',
-        password: '',
-        confirmPassword: '',
-      },
-    });
-
-  const onRegister = async (data: RegisterForm) => {
-    try {
-      await register(data);
-      openModal({
-        title: 'Cadastro realizado',
-        message: 'Sua conta foi criada com sucesso!',
-        confirmText: 'Continuar',
-        onConfirm: () => login(data),
-      });
-    } catch {
-      // handled by react query
-    }
-  };
-
-  useEffect(() => {
-    logout();
-  }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 py-10">
@@ -96,104 +44,30 @@ const Login = () => {
         </div>
 
         <div className="flex rounded-md bg-[#f7f3f5] p-1">
-          <button
-            className="flex flex-1 items-center justify-center rounded-md bg-white px-3 py-1.5 font-medium"
-            style={{
-              color: !page ? colors.black : colors.neutral[500],
-              backgroundColor: !page ? colors.white : colors.transparent,
-            }}
+          <LoginTab
+            isActive={!page}
+            label="Entrar"
             onClick={() => setPage(false)}
-          >
-            Entrar
-          </button>
+          />
 
-          <button
-            className="flex flex-1 items-center justify-center rounded-md bg-white px-3 py-1.5 font-medium"
-            style={{
-              color: page ? colors.black : colors.neutral[500],
-              backgroundColor: page ? colors.white : colors.transparent,
-            }}
+          <LoginTab
+            isActive={page}
+            label="Cadastrar"
             onClick={() => setPage(true)}
-          >
-            Cadastrar
-          </button>
+          />
         </div>
 
-        {!page ? (
-          <div key="login-form" className="flex flex-col gap-4">
-            <Input
-              control={control}
-              label="E-mail"
-              name="email"
-              placeholder="seu@email.com"
-            />
+        {!page ? <LoginFields /> : <RegisterFields />}
 
-            <Input
-              password
-              control={control}
-              label="Senha"
-              name="password"
-              placeholder="********"
-            />
-          </div>
-        ) : (
-          <div key="register-form" className="flex flex-col gap-4">
-            <Input
-              control={registerControl}
-              label="Nome completo"
-              name="name"
-              placeholder="Seu nome"
-            />
+        <div className="flex items-center justify-center gap-2">
+          <span className="h-px w-16 bg-neutral-300" />
 
-            <Input
-              control={registerControl}
-              label="Celular"
-              mask="(00) 00000-0000"
-              name="phone"
-              placeholder="(00) 00000-0000"
-            />
+          <span className="text-neutral-500">ou</span>
 
-            <Input
-              control={registerControl}
-              label="E-mail"
-              name="email"
-              placeholder="seu@email.com"
-            />
+          <span className="h-px w-16 bg-neutral-300" />
+        </div>
 
-            <Input
-              control={registerControl}
-              label="CPF"
-              mask="000.000.000-00"
-              name="cpf"
-              placeholder="000.000.000-00"
-            />
-
-            <Input
-              password
-              control={registerControl}
-              label="Senha"
-              name="password"
-              placeholder="********"
-            />
-
-            <Input
-              password
-              control={registerControl}
-              label="Confirmar Senha"
-              name="confirmPassword"
-              placeholder="********"
-            />
-          </div>
-        )}
-
-        <Button
-          fontSize={18}
-          text="Entrar"
-          width="100%"
-          onClick={() =>
-            page ? handleRegisterSubmit(onRegister)() : handleSubmit(login)()
-          }
-        />
+        <GoogleLoginButton />
       </div>
     </div>
   );

@@ -56,7 +56,7 @@ const Button = ({
 
   return (
     <button
-      className={`relative flex items-center justify-center gap-3 overflow-hidden rounded-lg border-2 p-2 ${loading || isLoading ? '' : 'hover:opacity-85'}`}
+      className={`relative flex items-center justify-center gap-3 overflow-hidden rounded-lg border-2 p-2 ${loading || isLoading || disabled ? '' : 'hover:opacity-85'}`}
       disabled={disabled || isLoading || loading}
       style={{
         backgroundColor: wired ? 'transparent' : color,

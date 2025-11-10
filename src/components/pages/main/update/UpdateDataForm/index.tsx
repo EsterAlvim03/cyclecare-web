@@ -1,20 +1,53 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button, Input } from '@/components/ui';
+import { useAuth } from '@/contexts/authContext';
+import { useUpdateUser } from '@/hooks/api/useUser';
+import { useDefaultModal } from '@/store/defaultModalStore';
 import { UpdateForm, UpdateSchema } from '@/validation/update.validation';
 
 const UpdateDataForm = () => {
-  const { control } = useForm<UpdateForm>({
+  const { user, fetchUser } = useAuth();
+  const { openModal } = useDefaultModal();
+  const { mutateAsync } = useUpdateUser();
+
+  const { control, reset, handleSubmit } = useForm<UpdateForm>({
     resolver: zodResolver(UpdateSchema),
     defaultValues: {
-      email: 'email@email.com',
-      name: 'Ester Alvim',
-      phone: '(11) 91234-5678',
+      email: '',
+      name: '',
+      phone: '',
+      cpf: '',
     },
   });
+
+  const onSubmit = async (data: UpdateForm) => {
+    await mutateAsync(data);
+    openModal({
+      title: 'Sucesso',
+      message: 'Dados atualizados com sucesso!',
+      confirmText: 'Ok',
+      onConfirm: () => {
+        reset();
+        fetchUser();
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        email: user.email,
+        name: user.name,
+        phone: user.phone,
+        cpf: user.cpf,
+      });
+    }
+  }, [user]);
 
   return (
     <div className="flex w-full flex-col gap-6 rounded-lg bg-white p-6 shadow-sm">
@@ -24,15 +57,11 @@ const UpdateDataForm = () => {
         <span className="text-sm text-neutral-600">Atualize seus dados</span>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <Input disabled control={control} label="E-mail" name="email" />
+      <Input disabled control={control} label="Nome completo" name="name" />
 
-        <span className="text-xs text-neutral-600">
-          O email não pode ser alterado
-        </span>
-      </div>
+      <Input disabled control={control} label="E-mail" name="email" />
 
-      <Input control={control} label="Nome completo" name="name" />
+      <Input control={control} disabled={!!user?.cpf} label="CPF" name="cpf" />
 
       <Input
         control={control}
@@ -41,7 +70,11 @@ const UpdateDataForm = () => {
         name="phone"
       />
 
-      <Button text="Salvar alterações" width={180} />
+      <Button
+        text="Salvar alterações"
+        width={180}
+        onClick={handleSubmit(onSubmit)}
+      />
     </div>
   );
 };

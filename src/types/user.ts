@@ -4,4 +4,6 @@ export type TUser = {
   email: string;
   phone: string;
   cpf: string;
+  password?: string;
+  currentPassword?: string;
 };

@@ -1,13 +1,15 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import tailwindColors from 'tailwindcss/colors';
 
 import { Button } from '@/components/ui';
+import { useDeleteUser } from '@/hooks/api/useUser';
 import { useDefaultModal } from '@/store/defaultModalStore';
+import colors from '@/theme/colors';
 
 const DangerZone = () => {
   const router = useRouter();
   const { openModal } = useDefaultModal();
+  const { mutateAsync } = useDeleteUser();
 
   const handleDeleteAccount = () => {
     openModal({
@@ -15,7 +17,10 @@ const DangerZone = () => {
       message: 'Tem certeza que deseja excluir sua conta?',
       notice: 'Essa ação é irreversível e todos os seus dados serão perdidos.',
       confirmText: 'Excluir',
-      onConfirm: () => router.replace('/login'),
+      onConfirm: async () => {
+        await mutateAsync();
+        router.replace('/login');
+      },
       cancelText: 'Cancelar',
     });
   };
@@ -31,7 +36,7 @@ const DangerZone = () => {
       </div>
 
       <Button
-        color={tailwindColors.red[600]}
+        color={colors.red[600]}
         text="Excluir minha conta"
         width={200}
         onClick={handleDeleteAccount}

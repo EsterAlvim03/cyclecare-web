@@ -31,6 +31,7 @@ const Input = <TFieldValues extends FieldValues>({
   control,
   name,
   mask,
+  disabled,
   ...props
 }: Props<TFieldValues>) => {
   const [passwordHidden, setPasswordHidden] = useState(password);
@@ -45,13 +46,15 @@ const Input = <TFieldValues extends FieldValues>({
 
   const commonProps = {
     className:
-      'text-neutral-60 placeholder:text-neutral-40 w-full p-2 text-lg focus-within:outline-none',
+      'placeholder:text-neutral-40 w-full p-2 text-lg focus-within:outline-none',
     placeholder,
     style: {
+      color: disabled ? colors.neutral[950] : colors.neutral[600],
       paddingLeft: leftIcon ? 40 : 8,
       paddingRight: password ? 44 : undefined,
     },
     type: passwordHidden ? 'password' : 'text',
+    disabled,
     ...props,
     ...field,
   };

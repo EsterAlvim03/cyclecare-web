@@ -21,6 +21,7 @@ const DefaultModalButton = ({ text, onClick }: Props) => {
       className={`min-w-1/2 relative flex grow items-center justify-center border-r border-neutral-200 p-3 ${!isLoading && 'hover:bg-black/5'}`}
       disabled={isLoading}
       style={{ cursor: isLoading ? 'default' : 'pointer' }}
+      type="button"
       onClick={handleOnClick}
     >
       <p className="text-primary text-lg">{text}</p>
