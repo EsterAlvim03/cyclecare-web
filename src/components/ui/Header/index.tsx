@@ -6,15 +6,17 @@ import LogOutButton from './LogOutButton';
 
 const Header = () => {
   return (
-    <div className="flex items-center justify-between border-b border-neutral-200 bg-white p-4">
-      <Image
-        alt="Logo"
-        className="h-8 w-[150px]"
-        src={LogoImg}
-        style={{ objectFit: 'contain' }}
-      />
+    <div className="flex items-center border-b border-neutral-200 bg-white">
+      <div className="mx-auto flex max-w-[1368px] flex-1 justify-between p-4">
+        <Image
+          alt="Logo"
+          className="h-8 w-[150px]"
+          src={LogoImg}
+          style={{ objectFit: 'contain' }}
+        />
 
-      <LogOutButton />
+        <LogOutButton />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseURL = 'http://192.168.15.15:8080/api/';
+export const baseURL = 'https://cyclecare-server-1-0.onrender.com/api/';
 
 const http = axios.create({
   baseURL,
