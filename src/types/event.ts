@@ -11,3 +11,10 @@ export type TEvent = {
   start: TEventDate;
   end: TEventDate;
 };
+
+export type TEventRequest = {
+  summary: string;
+  description?: string;
+  startDateTime: Date;
+  endDateTime: Date;
+};

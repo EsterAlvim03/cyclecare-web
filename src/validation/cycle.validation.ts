@@ -21,8 +21,8 @@ export const CycleSchema = z
   .refine(
     data =>
       isAfter(
-        parse(data.endDate, 'dd/MM/yyyy hh:mm', new Date()),
-        parse(data.startDate, 'dd/MM/yyyy hh:mm', new Date()),
+        parse(data.startDate, 'yyyy-MM-dd', new Date()),
+        parse(data.endDate, 'yyyy-MM-dd', new Date()),
       ),
     {
       message: 'A data de término deve ser posterior à data de início',

@@ -14,8 +14,8 @@ export const EventSchema = z
   .refine(
     data =>
       isAfter(
-        parse(data.endDateTime, 'dd/MM/yyyy hh:mm', new Date()),
-        parse(data.startDateTime, 'dd/MM/yyyy hh:mm', new Date()),
+        parse(data.endDateTime, 'dd/MM/yyyy HH:mm', new Date()),
+        parse(data.startDateTime, 'dd/MM/yyyy HH:mm', new Date()),
       ),
     {
       message: 'A data de término deve ser posterior à data de início',

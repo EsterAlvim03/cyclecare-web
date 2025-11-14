@@ -1,5 +1,4 @@
-import { TEvent } from '@/types/event';
-import { EventForm } from '@/validation/event.validation';
+import { TEvent, TEventRequest } from '@/types/event';
 
 import { http } from '../http';
 
@@ -18,13 +17,21 @@ export const eventService = {
     return data;
   },
 
-  create: async (event: EventForm) => {
+  create: async (event: TEventRequest) => {
+    console.log(event);
+
     const { data } = await http.post<TEvent>(BASE_URL, event);
 
     return data;
   },
 
-  update: async ({ eventId, event }: { eventId: string; event: EventForm }) => {
+  update: async ({
+    eventId,
+    event,
+  }: {
+    eventId: string;
+    event: TEventRequest;
+  }) => {
     const { data } = await http.put<TEvent>(`${BASE_URL}/${eventId}`, event);
 
     return data;

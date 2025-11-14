@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { parse } from 'date-fns';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -60,7 +61,15 @@ const EventModal = () => {
   const handleUpdate = async (event: EventForm) => {
     await updateEvent({
       eventId: eventId!,
-      event,
+      event: {
+        ...event,
+        startDateTime: parse(
+          event.startDateTime,
+          'dd/MM/yyyy HH:mm',
+          new Date(),
+        ),
+        endDateTime: parse(event.endDateTime, 'dd/MM/yyyy HH:mm', new Date()),
+      },
     });
     openModal({
       title: 'Sucesso',
@@ -71,7 +80,11 @@ const EventModal = () => {
   };
 
   const handleCreate = async (event: EventForm) => {
-    await createEvent(event);
+    await createEvent({
+      ...event,
+      startDateTime: parse(event.startDateTime, 'dd/MM/yyyy HH:mm', new Date()),
+      endDateTime: parse(event.endDateTime, 'dd/MM/yyyy HH:mm', new Date()),
+    });
     openModal({
       title: 'Sucesso',
       message: 'Evento criado com sucesso! ',
