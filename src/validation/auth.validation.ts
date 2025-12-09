@@ -3,7 +3,7 @@ import { validateCpf, validatePhone } from '@/utils/validation';
 import z from './zod';
 
 export const LoginSchema = z.object({
-  email: z.email(),
+  email: z.email().toLowerCase(),
   password: z.string().min(1),
   rememberMe: z.boolean().optional(),
 });
@@ -17,7 +17,7 @@ export const RegisterSchema = z
       .string()
       .min(1)
       .refine(validatePhone, 'Número de telefone inválido'),
-    email: z.email(),
+    email: z.email().toLowerCase(),
     cpf: z.string().min(1).refine(validateCpf, 'CPF inválido'),
     password: z.string().min(8),
     confirmPassword: z.string().min(1),

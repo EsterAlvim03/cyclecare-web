@@ -11,19 +11,22 @@ export const CycleSchema = z
     mood: z.string().min(1),
     startDate: z
       .string()
+      .min(1)
       .refine(validateDate, 'Data inválida')
       .transform(formatDateToEnglish),
     endDate: z
       .string()
+      .min(1)
       .refine(validateDate, 'Data inválida')
       .transform(formatDateToEnglish),
   })
   .refine(
-    data =>
-      isAfter(
-        parse(data.startDate, 'yyyy-MM-dd', new Date()),
-        parse(data.endDate, 'yyyy-MM-dd', new Date()),
-      ),
+    data => {
+      const parsedStart = parse(data.startDate, 'yyyy-MM-dd', new Date());
+      const parsedEnd = parse(data.endDate, 'yyyy-MM-dd', new Date());
+
+      return isAfter(parsedStart, parsedEnd);
+    },
     {
       message: 'A data de término deve ser posterior à data de início',
       path: ['endDate'],

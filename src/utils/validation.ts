@@ -59,6 +59,14 @@ export const validateTime = (time: string): boolean => {
 };
 
 export const validateDateTime = (dateTime: string): boolean => {
+  if (!dateTime) {
+    return false;
+  }
+
+  if (!dateTime.match(/^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}$/)) {
+    return false;
+  }
+
   const [date, time] = dateTime.split(' ');
 
   return validateDate(date) && validateTime(time);
