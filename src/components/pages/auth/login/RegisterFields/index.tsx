@@ -21,7 +21,6 @@ const RegisterFields = () => {
       phone: '',
       password: '',
       confirmPassword: '',
-      cpf: '',
       terms: false,
     },
   });
@@ -68,14 +67,6 @@ const RegisterFields = () => {
         label="E-mail"
         name="email"
         placeholder="seu@email.com"
-      />
-
-      <Input
-        control={control}
-        label="CPF"
-        mask="000.000.000-00"
-        name="cpf"
-        placeholder="000.000.000-00"
       />
 
       <Input

@@ -21,7 +21,6 @@ const UpdateDataForm = () => {
       email: '',
       name: '',
       phone: '',
-      cpf: '',
     },
   });
 
@@ -44,7 +43,6 @@ const UpdateDataForm = () => {
         email: user.email,
         name: user.name,
         phone: user.phone,
-        cpf: user.cpf,
       });
     }
   }, [user]);
@@ -60,8 +58,6 @@ const UpdateDataForm = () => {
       <Input disabled control={control} label="Nome completo" name="name" />
 
       <Input disabled control={control} label="E-mail" name="email" />
-
-      <Input control={control} disabled={!!user?.cpf} label="CPF" name="cpf" />
 
       <Input
         control={control}

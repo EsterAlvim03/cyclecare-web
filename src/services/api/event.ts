@@ -18,8 +18,6 @@ export const eventService = {
   },
 
   create: async (event: TEventRequest) => {
-    console.log(event);
-
     const { data } = await http.post<TEvent>(BASE_URL, event);
 
     return data;

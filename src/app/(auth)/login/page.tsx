@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import GoogleLoginButton from '@/components/pages/auth/login/GoogleLoginButton';
 import LoginFields from '@/components/pages/auth/login/LoginFields';
 import LoginTab from '@/components/pages/auth/login/LoginTab';
 import RegisterFields from '@/components/pages/auth/login/RegisterFields';
@@ -58,16 +57,6 @@ const Login = () => {
         </div>
 
         {!page ? <LoginFields /> : <RegisterFields />}
-
-        <div className="flex items-center justify-center gap-2">
-          <span className="h-px w-16 bg-neutral-300" />
-
-          <span className="text-neutral-500">ou</span>
-
-          <span className="h-px w-16 bg-neutral-300" />
-        </div>
-
-        <GoogleLoginButton />
       </div>
     </div>
   );

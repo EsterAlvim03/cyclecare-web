@@ -3,7 +3,6 @@ export type TUser = {
   name: string;
   email: string;
   phone: string;
-  cpf: string;
   password?: string;
   currentPassword?: string;
 };

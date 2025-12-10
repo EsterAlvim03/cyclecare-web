@@ -1,10 +1,9 @@
-import { validateCpf, validatePhone } from '@/utils/validation';
+import { validatePhone } from '@/utils/validation';
 
 import z from './zod';
 
 export const UpdateSchema = z.object({
   email: z.email(),
-  cpf: z.string().min(1).refine(validateCpf, 'CPF inválido'),
   name: z.string(),
   phone: z.string().min(1).refine(validatePhone, 'Número de telefone inválido'),
 });
