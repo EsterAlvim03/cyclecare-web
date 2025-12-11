@@ -1,13 +1,13 @@
 'use client';
-import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui';
+import { useAuth } from '@/contexts/authContext';
 import { useDeleteUser } from '@/hooks/api/useUser';
 import { useDefaultModal } from '@/store/defaultModalStore';
 import colors from '@/theme/colors';
 
 const DangerZone = () => {
-  const router = useRouter();
+  const { logout } = useAuth();
   const { openModal } = useDefaultModal();
   const { mutateAsync } = useDeleteUser();
 
@@ -19,7 +19,7 @@ const DangerZone = () => {
       confirmText: 'Excluir',
       onConfirm: async () => {
         await mutateAsync();
-        router.replace('/login');
+        logout();
       },
       cancelText: 'Cancelar',
     });
