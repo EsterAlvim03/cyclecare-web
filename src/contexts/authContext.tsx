@@ -1,10 +1,6 @@
 /* eslint-disable no-unused-vars */
 'use client';
 
-import {
-  OverridableTokenClientConfig,
-  useGoogleLogin,
-} from '@react-oauth/google';
 import { useQueryClient } from '@tanstack/react-query';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -15,7 +11,7 @@ import {
   useState,
 } from 'react';
 
-import { useLogin, useLoginGoogle } from '@/hooks/api/useAuthApi';
+import { useLogin } from '@/hooks/api/useAuthApi';
 import { useMe } from '@/hooks/api/useUser';
 import { http } from '@/services/http';
 import { TUser } from '@/types/user';
@@ -24,7 +20,6 @@ import { LoginForm } from '@/validation/auth.validation';
 
 type ContextValues = {
   user: TUser | null;
-  googleLogin: (overrideConfig?: OverridableTokenClientConfig) => void;
   login: (form: LoginForm) => Promise<void>;
   logout: () => void;
   fetchUser: () => Promise<void>;
@@ -43,7 +38,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const [isReady, setIsReady] = useState(false);
   const { mutateAsync: loginMutate } = useLogin();
-  const { mutateAsync: loginGoogleMutate } = useLoginGoogle();
   const { refetch } = useMe();
 
   const logout = () => {
@@ -95,17 +89,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const googleLogin = useGoogleLogin({
-    onSuccess: async tokenResponse => {
-      if (tokenResponse.access_token) {
-        const { jwt } = await loginGoogleMutate(tokenResponse.access_token);
-        await setTokenAndLogin(jwt);
-        router.replace('/home');
-      }
-    },
-    scope: 'https://www.googleapis.com/auth/calendar',
-  });
-
   useEffect(() => {
     const fetchUser = async () => {
       const accessToken =
@@ -148,9 +131,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }
 
   return (
-    <AuthContext.Provider
-      value={{ user, googleLogin, login, logout, fetchUser }}
-    >
+    <AuthContext.Provider value={{ user, login, logout, fetchUser }}>
       {children}
     </AuthContext.Provider>
   );

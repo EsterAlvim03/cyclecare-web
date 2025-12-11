@@ -23,3 +23,9 @@ export const useDeleteUser = () => {
     mutationFn: userService.delete,
   });
 };
+
+export const useLoginGoogle = () => {
+  return useMutation({
+    mutationFn: userService.googleLogin,
+  });
+};

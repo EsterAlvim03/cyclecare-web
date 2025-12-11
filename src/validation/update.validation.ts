@@ -12,24 +12,10 @@ export type UpdateForm = z.infer<typeof UpdateSchema>;
 
 export const PasswordSchema = z
   .object({
-    hasNoPassword: z.boolean().optional(),
-    currentPassword: z.string().optional(),
+    currentPassword: z.string(),
     newPassword: z.string().min(8),
     confirmPassword: z.string().min(1),
   })
-  .refine(
-    data => {
-      if (data.hasNoPassword) {
-        return true;
-      }
-
-      return !!data.currentPassword;
-    },
-    {
-      message: 'Campo obrigatório',
-      path: ['currentPassword'],
-    },
-  )
   .refine(data => data.newPassword === data.confirmPassword, {
     message: 'As senhas não coincidem',
     path: ['confirmPassword'],

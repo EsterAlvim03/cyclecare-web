@@ -14,12 +14,6 @@ export const useRegister = () => {
   });
 };
 
-export const useLoginGoogle = () => {
-  return useMutation({
-    mutationFn: authService.googleLogin,
-  });
-};
-
 export const useForgotPassword = () => {
   return useMutation({
     mutationFn: authService.forgotPassword,

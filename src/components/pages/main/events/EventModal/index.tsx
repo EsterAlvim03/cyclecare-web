@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { parse } from 'date-fns';
+import { subMilliseconds } from 'date-fns/fp';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -59,16 +60,27 @@ const EventModal = () => {
   };
 
   const handleUpdate = async (event: EventForm) => {
+    const parsedStartDate = parse(
+      event.startDateTime,
+      'dd/MM/yyyy HH:mm',
+      new Date(),
+    );
+
+    const parsedEndDate = parse(
+      event.endDateTime,
+      'dd/MM/yyyy HH:mm',
+      new Date(),
+    );
+
+    const startDateTime = subMilliseconds(10800000, parsedStartDate);
+    const endDateTime = subMilliseconds(10800000, parsedEndDate);
+
     await updateEvent({
       eventId: eventId!,
       event: {
         ...event,
-        startDateTime: parse(
-          event.startDateTime,
-          'dd/MM/yyyy HH:mm',
-          new Date(),
-        ),
-        endDateTime: parse(event.endDateTime, 'dd/MM/yyyy HH:mm', new Date()),
+        startDateTime,
+        endDateTime,
       },
     });
     openModal({
@@ -80,10 +92,25 @@ const EventModal = () => {
   };
 
   const handleCreate = async (event: EventForm) => {
+    const parsedStartDate = parse(
+      event.startDateTime,
+      'dd/MM/yyyy HH:mm',
+      new Date(),
+    );
+
+    const parsedEndDate = parse(
+      event.endDateTime,
+      'dd/MM/yyyy HH:mm',
+      new Date(),
+    );
+
+    const startDateTime = subMilliseconds(10800000, parsedStartDate);
+    const endDateTime = subMilliseconds(10800000, parsedEndDate);
+
     await createEvent({
       ...event,
-      startDateTime: parse(event.startDateTime, 'dd/MM/yyyy HH:mm', new Date()),
-      endDateTime: parse(event.endDateTime, 'dd/MM/yyyy HH:mm', new Date()),
+      startDateTime,
+      endDateTime,
     });
     openModal({
       title: 'Sucesso',

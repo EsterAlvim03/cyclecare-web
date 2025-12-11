@@ -17,14 +17,6 @@ export const authService = {
     await http.post(`${BASE_URL}/register`, form);
   },
 
-  googleLogin: async (jwt: string) => {
-    const { data } = await http.post(`${BASE_URL}/google-login`, {
-      jwt,
-    });
-
-    return data;
-  },
-
   forgotPassword: async (email: string) => {
     await http.put(`${BASE_URL}/forgot-password`, { email });
   },

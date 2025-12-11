@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { Button, CheckBox, Input } from '@/components/ui';
+import { Button, Input } from '@/components/ui';
 import { useUpdateUser } from '@/hooks/api/useUser';
 import { useDefaultModal } from '@/store/defaultModalStore';
 import { PasswordForm, PasswordSchema } from '@/validation/update.validation';
@@ -12,17 +12,14 @@ const ChangePasswordForm = () => {
   const { openModal } = useDefaultModal();
   const { mutateAsync } = useUpdateUser();
 
-  const { control, handleSubmit, reset, watch } = useForm<PasswordForm>({
+  const { control, handleSubmit, reset } = useForm<PasswordForm>({
     resolver: zodResolver(PasswordSchema),
     defaultValues: {
-      hasNoPassword: false,
       currentPassword: '',
       newPassword: '',
       confirmPassword: '',
     },
   });
-
-  const hasNoPassword = watch('hasNoPassword');
 
   const onSubmit = async (data: PasswordForm) => {
     await mutateAsync({
@@ -46,18 +43,12 @@ const ChangePasswordForm = () => {
         <span className="text-sm text-neutral-600">Atualize sua senha</span>
       </div>
 
-      <CheckBox control={control} name="hasNoPassword">
-        <span className="text-sm">Não possuo senha cadastrada</span>
-      </CheckBox>
-
-      {!hasNoPassword && (
-        <Input
-          password
-          control={control}
-          label="Senha atual"
-          name="currentPassword"
-        />
-      )}
+      <Input
+        password
+        control={control}
+        label="Senha atual"
+        name="currentPassword"
+      />
 
       <Input password control={control} label="Nova senha" name="newPassword" />
 

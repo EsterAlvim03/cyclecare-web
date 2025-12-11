@@ -3,6 +3,7 @@ export type TUser = {
   name: string;
   email: string;
   phone: string;
+  isGoogleLogged: boolean;
   password?: string;
   currentPassword?: string;
 };

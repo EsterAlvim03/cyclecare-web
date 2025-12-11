@@ -20,4 +20,12 @@ export const userService = {
   delete: async () => {
     await http.delete(BASE_URL);
   },
+
+  googleLogin: async (jwt: string) => {
+    const { data } = await http.post(`${BASE_URL}/google-login`, {
+      jwt,
+    });
+
+    return data;
+  },
 };
