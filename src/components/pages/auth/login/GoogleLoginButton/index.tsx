@@ -1,6 +1,7 @@
 'use client';
 
 import { useGoogleLogin } from '@react-oauth/google';
+import { toast } from 'react-toastify';
 
 import { Icon } from '@/components/ui';
 import { useAuth } from '@/contexts/authContext';
@@ -15,6 +16,8 @@ const GoogleLoginButton = () => {
       if (tokenResponse.access_token) {
         await loginGoogleMutate(tokenResponse.access_token);
         await fetchUser();
+
+        toast.success('Login realizado com sucesso!');
       }
     },
     scope: 'https://www.googleapis.com/auth/calendar',
